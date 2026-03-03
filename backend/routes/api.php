@@ -3,9 +3,4 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BookController;
 
-Route::prefix('books')->group(function () {
-    Route::get('/', [BookController::class, 'index']);
-    Route::post('/', [BookController::class, 'store']);
-    Route::put('/{book}', [BookController::class, 'update']);
-    Route::delete('/{book}', [BookController::class, 'destroy']);
-});
+Route::apiResource('books', BookController::class);
