@@ -21,6 +21,17 @@ class BookController extends Controller
     }
 
     /**
+     * Display the specified book.
+     */
+    public function show(Book $book)
+    {
+        return response()->json([
+            'success' => true,
+            'data' => $book
+        ], 200);
+    }
+
+    /**
      * Store a newly created book.
      */
     public function store(Request $request)
