@@ -8,20 +8,38 @@ use Illuminate\Http\Request;
 class BookController extends Controller
 {
     /**
-     * Display a listing of books.
+     * Display a listing of books with search + pagination.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $books = Book::latest()->get();
+        $query = Book::query();
+
+        // 🔎 Search functionality
+        if ($request->has('search') && $request->search) {
+            $search = $request->search;
+
+            $query->where(function ($q) use ($search) {
+                $q->where('title', 'like', "%{$search}%")
+                  ->orWhere('author', 'like', "%{$search}%")
+                  ->orWhere('isbn', 'like', "%{$search}%");
+            });
+        }
+
+        // 📄 Pagination (5 per page)
+        $books = $query->latest()->paginate(5);
 
         return response()->json([
             'success' => true,
-            'data' => $books
+            'data' => $books->items(),
+            'current_page' => $books->currentPage(),
+            'last_page' => $books->lastPage(),
+            'per_page' => $books->perPage(),
+            'total' => $books->total(),
         ], 200);
     }
 
     /**
-     * Display the specified book.
+     * Display a single book.
      */
     public function show(Book $book)
     {
