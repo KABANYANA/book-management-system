@@ -227,7 +227,7 @@ frontend/
 
 #  Limitations
 
-- No role-based access control for 
+- No role-based access control, all users have the same privileges
 - No automated test coverage included
 - Basic UI without advanced animations
 - Local integration
@@ -237,4 +237,5 @@ frontend/
 #  Author
 
 Joyeuse KABANYANA
+
 
